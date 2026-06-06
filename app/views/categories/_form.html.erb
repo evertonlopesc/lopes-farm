@@ -1,0 +1,16 @@
+<%= form_with model: category do |f| %>
+  <% if category.errors.any? %>
+    <ul>
+      <% category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "Nome" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

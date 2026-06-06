@@ -1,0 +1,40 @@
+<h1>🏆 Ranking — Melhores itens para vender</h1>
+
+<%= form_with url: ranking_items_path, method: :get do |f| %>
+  <%= f.collection_select :category_id, @categories, :id, :name,
+                          { include_blank: "Todas as categorias", selected: params[:category_id] } %>
+  <%= f.submit "Filtrar" %>
+<% end %>
+
+<% if @results.empty? %>
+  <p>Nenhum item encontrado.</p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Item</th>
+        <th>Categoria</th>
+        <th>Tempo</th>
+        <th>Componentes</th>
+        <th>Custo total</th>
+        <th>Preço</th>
+        <th>Margem</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @results.each_with_index do |result, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= link_to result.item.name, result.item %></td>
+          <td><%= result.item.category&.name || "—" %></td>
+          <td><%= result.formatted_time %></td>
+          <td><%= result.component_count %></td>
+          <td>R$ <%= result.total_cost %></td>
+          <td>R$ <%= result.item.sale_price %></td>
+          <td><%= result.margin_percentage %>%</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "App" %></title>
+    <title>Lopes Farm</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <nav>
+      <strong><%= link_to "🌾 Lopes Farm", root_path %></strong>
+      <%= link_to "Itens", items_path %>
+      <%= link_to "Categorias", categories_path %>
+      <%= link_to "Ranking", ranking_items_path %>
+    </nav>
+
+    <main>
+      <% if notice.present? %>
+        <p id="notice"><%= notice %></p>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>

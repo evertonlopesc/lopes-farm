@@ -1,0 +1,31 @@
+<h1>Itens</h1>
+<%= link_to "Novo Item", new_item_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Categoria</th>
+      <th>Tempo</th>
+      <th>Preço</th>
+      <th>Tipo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.category&.name || "—" %></td>
+        <td><%= item.formatted_preparation_time %></td>
+        <td>R$ <%= item.sale_price %></td>
+        <td><%= item.primary? ? "Primário" : "Composto" %></td>
+        <td>
+          <%= link_to "Ver", item %>
+          <%= link_to "Editar", edit_item_path(item) %>
+          <%= link_to "Remover", item, data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

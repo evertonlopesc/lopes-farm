@@ -1,0 +1,8 @@
+<div data-controller="nested-form-item">
+  <%= f.collection_select :component_item_id, @items, :id, :name, { include_blank: "Selecione" } %>
+  <%= f.number_field :quantity, min: 0.0001, step: 0.0001, placeholder: "Quantidade" %>
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "Remover",
+              "#",
+              data: { action: "nested-form-item#remove" } %>
+</div>

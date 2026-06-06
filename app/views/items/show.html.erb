@@ -1,0 +1,23 @@
+<h1><%= @item.name %></h1>
+
+<p>Tipo: <%= @presenter.type_label %></p>
+<p>Categoria: <%= @item.category&.name || "—" %></p>
+<p>Tempo de preparo: <%= @presenter.preparation_time %></p>
+
+<% summary = @presenter.cost_summary %>
+<p>Custo adicional: <%= summary[:additional_cost] %></p>
+<p>Custo total: <%= summary[:total_cost] %></p>
+<p>Preço de venda: <%= summary[:sale_price] %></p>
+<p>Margem: <%= summary[:margin] %> (<%= summary[:margin_percentage] %>)</p>
+
+<% if @item.composite? %>
+  <h2>Componentes</h2>
+  <ul>
+    <% @item.item_components.each do |ic| %>
+      <li><%= ic.quantity %>x <%= ic.component_item.name %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= link_to "Editar", edit_item_path(@item) %>
+<%= link_to "Voltar", items_path %>

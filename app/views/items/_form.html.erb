@@ -1,0 +1,46 @@
+<%= form_with model: item do |f| %>
+  <% if item.errors.any? %>
+    <ul>
+      <% item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "Nome" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :category_id, "Categoria" %>
+    <%= f.collection_select :category_id, @categories, :id, :name, { include_blank: "Sem categoria" } %>
+  </div>
+
+  <div>
+    <%= f.label :preparation_time, "Tempo de preparo (minutos)" %>
+    <%= f.number_field :preparation_time, min: 0 %>
+  </div>
+
+  <div>
+    <%= f.label :sale_price, "Preço de venda (R$)" %>
+    <%= f.number_field :sale_price, min: 0, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.label :additional_cost, "Custo adicional (R$)" %>
+    <%= f.number_field :additional_cost, min: 0, step: 0.01 %>
+  </div>
+
+  <fieldset>
+    <legend>Componentes</legend>
+    <%= f.fields_for :item_components do |ic| %>
+      <%= render "item_component_fields", f: ic %>
+    <% end %>
+    <%= link_to "Adicionar componente",
+                "#",
+                data: { controller: "nested-form", action: "nested-form#add" } %>
+  </fieldset>
+
+  <%= f.submit %>
+<% end %>
