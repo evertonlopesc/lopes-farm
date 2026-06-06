@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
 
   def index
-    @categories = Category.with_items.order(:name)
+    @categories = Category.order(:name)
   end
 
   def show; end
