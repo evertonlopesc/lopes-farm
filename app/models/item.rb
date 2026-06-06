@@ -7,6 +7,9 @@ class Item < ApplicationRecord
            foreign_key: :parent_item_id,
            dependent: :destroy,
            inverse_of: :parent_item
+  accepts_nested_attributes_for :item_components,
+                                allow_destroy: true,
+                                reject_if: :all_blank
 
   has_many :components,
            through: :item_components,
