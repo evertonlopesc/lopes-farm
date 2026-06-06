@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: true
+  commands:
+    rubocop:
+      glob: "*.rb"
+      run: docker compose exec -T app bundle exec rubocop --force-exclusion {staged_files}
+
+pre-push:
+  commands:
+    rspec:
+      run: docker compose run --rm test bundle exec rspec --fail-fast

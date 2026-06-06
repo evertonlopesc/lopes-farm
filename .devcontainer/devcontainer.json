@@ -1,0 +1,37 @@
+{
+  "name": "Item System — Rails Dev",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/app",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "shopify.ruby-lsp",
+        "misogi.ruby-rubocop",
+        "hridoy.rails-snippets",
+        "eamodio.gitlens"
+      ]
+    }
+  },
+
+  "remoteEnv": {
+    "DATABASE_URL": "postgresql://postgres:postgres@db:5432/item_system_development",
+    "REDIS_URL": "redis://redis:6379/0",
+    "RAILS_ENV": "development"
+  },
+
+  "postCreateCommand": "bundle install && rails db:prepare",
+
+  "forwardPorts": [3000, 5432, 6379],
+
+  "mounts": [
+    "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.config/nvim,target=/root/.config/nvim,type=bind,consistency=cached"
+  ]
+}
