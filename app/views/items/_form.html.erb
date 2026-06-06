@@ -32,15 +32,23 @@
     <%= f.number_field :additional_cost, min: 0, step: 0.01 %>
   </div>
 
-  <fieldset>
-    <legend>Componentes</legend>
+<fieldset data-controller="nested-form">
+  <legend>Componentes</legend>
+
+  <div data-nested-form-target="container">
     <%= f.fields_for :item_components do |ic| %>
-      <%= render "item_component_fields", f: ic %>
+      <%= render "item_component_fields", f: ic, new_record: false %>
     <% end %>
-    <%= link_to "Adicionar componente",
-                "#",
-                data: { controller: "nested-form", action: "nested-form#add" } %>
-  </fieldset>
+  </div>
+
+  <template data-nested-form-target="template">
+    <%= f.fields_for :item_components, ItemComponent.new, child_index: "NEW_RECORD" do |ic| %>
+      <%= render "item_component_fields", f: ic, new_record: true %>
+    <% end %>
+  </template>
+
+  <%= link_to "＋ Adicionar componente", "#", data: { action: "click->nested-form#add" } %>
+</fieldset>
 
   <%= f.submit %>
 <% end %>

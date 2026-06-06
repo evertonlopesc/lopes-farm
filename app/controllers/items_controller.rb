@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
 
     if @item.save
-      redirect_to @item, notice: "Item criado com sucesso."
+      redirect_to items_path, notice: "Item criado com sucesso."
     else
       render :new, status: :unprocessable_entity
     end
