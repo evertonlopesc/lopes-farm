@@ -97,4 +97,26 @@ RSpec.describe Item, type: :model do
       expect(item.formatted_preparation_time).to eq("1h 30min")
     end
   end
+
+  describe "#total_preparation_time" do
+    context "when item is primary" do
+      subject(:item) { build(:item, preparation_time: 30) }
+
+      it "returns only its own preparation_time" do
+        expect(item.total_preparation_time).to eq(30)
+      end
+    end
+
+    context "when item is composite" do
+      let(:flour) { create(:item, preparation_time: 10, additional_cost: 2.0) }
+      let(:bread) { create(:item, preparation_time: 20, additional_cost: 1.0) }
+
+      before { create(:item_component, parent_item: bread, component_item: flour, quantity: 2) }
+
+      it "returns own time plus components time times quantity" do
+        # 20 + (2 × 10) = 40
+        expect(bread.total_preparation_time).to eq(40)
+      end
+    end
+  end
 end

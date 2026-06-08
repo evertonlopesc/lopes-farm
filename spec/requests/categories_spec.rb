@@ -1,32 +1,35 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "Categories", type: :request do
-  describe "GET /index" do
+  let!(:category) { create(:category) }
+
+  describe "GET /categories" do
     it "returns http success" do
-      get "/categories/index"
+      get categories_path
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /show" do
+  describe "GET /categories/:id" do
     it "returns http success" do
-      get "/categories/show"
+      get category_path(category)
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /new" do
+  describe "GET /categories/new" do
     it "returns http success" do
-      get "/categories/new"
+      get new_category_path
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /edit" do
+  describe "GET /categories/:id/edit" do
     it "returns http success" do
-      get "/categories/edit"
+      get edit_category_path(category)
       expect(response).to have_http_status(:success)
     end
   end
-
 end
