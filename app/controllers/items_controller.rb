@@ -5,7 +5,15 @@ class ItemsController < ApplicationController
   before_action :load_form_data, only: %i[new edit create update]
 
   def index
-    @items = Item.includes(:category).order(:name)
+    if params[:category_id].present?
+      items = Item.includes(:category)
+                   .where(category: { id: params[:category_id] })
+    else
+      items = Item.includes(:category).order(:name)
+    end
+
+    @items = items
+    @categories = Category.order(:name)
   end
 
   def show
@@ -19,9 +27,16 @@ class ItemsController < ApplicationController
   def edit; end
 
   def ranking
-    @results = BestItemsToSellQuery.new(
-      category_id: params[:category_id]
-    ).call
+    @results = if params[:category_id].present?
+                 BestItemsToSellQuery.new(
+                     category_id: params[:category_id]
+                   ).call
+               else
+                 @results = BestItemsToSellQuery.new(
+                   category_id: Category.ids
+                 ).call
+               end
+
     @categories = Category.order(:name)
   end
 

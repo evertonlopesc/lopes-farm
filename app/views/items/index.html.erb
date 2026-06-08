@@ -1,6 +1,12 @@
 <h1>Itens</h1>
 <%= link_to "Novo Item", new_item_path %>
 
+<%= form_with url: items_path, method: :get do |f| %>
+  <%= f.collection_select :category_id, @categories, :id, :name,
+                          { include_blank: "Todas as categorias", selected: params[:category_id] } %>
+  <%= f.submit "Filtrar" %>
+<% end %>
+
 <table>
   <thead>
     <tr>
