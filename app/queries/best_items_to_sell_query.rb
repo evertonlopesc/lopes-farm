@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BestItemsToSellQuery
-  DEFAULT_LIMIT = 20
+  DEFAULT_LIMIT = 100
 
   def initialize(relation: Item.all, category_id: nil, limit: DEFAULT_LIMIT)
     @relation    = relation
@@ -32,7 +32,7 @@ class BestItemsToSellQuery
     Data.define(:item, :preparation_time, :margin, :margin_percentage,
                 :total_cost, :component_count, :formatted_time).new(
       item:              item,
-      preparation_time:  item.preparation_time,
+      preparation_time:  item.total_preparation_time,  # ← era item.preparation_time
       margin:            item.margin,
       margin_percentage: item.margin_percentage,
       total_cost:        item.total_cost,

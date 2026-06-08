@@ -66,16 +66,26 @@ class Item < ApplicationRecord
   end
 
   def formatted_preparation_time
-    if preparation_time < 60
-      "#{preparation_time} min"
+    time = total_preparation_time
+
+    if time < 60
+      "#{time} min"
     else
-      hours   = preparation_time / 60
-      minutes = preparation_time % 60
-      minutes.zero? ? "#{hours}h" : "#{hours}h #{minutes}min"
+      hours   = time / 60
+      minutes = time % 60
+      minutes.zero? ? "#{hours.to_i} h" : "#{hours.to_i} h #{minutes.to_i} min"
     end
   end
 
+  def total_preparation_time
+    preparation_time + component_preparation_time
+  end
+
   private
+
+  def component_preparation_time
+    item_components.sum { |ic| ic.quantity * ic.component_item.total_preparation_time }
+  end
 
   def component_costs
     item_components.sum { |ic| ic.quantity * ic.component_item.total_cost }
