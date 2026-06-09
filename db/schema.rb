@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_06_101554) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_09_150853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,8 +41,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_06_101554) do
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "output_quantity", default: 1, null: false
     t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["name"], name: "index_items_on_name", unique: true
+    t.check_constraint "output_quantity > 0", name: "check_output_quantity_positive"
   end
 
   add_foreign_key "item_components", "items", column: "component_item_id"

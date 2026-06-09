@@ -76,7 +76,8 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-      :name, :preparation_time, :sale_price, :additional_cost, :category_id,
+      :name, :preparation_time, :sale_price, :additional_cost,
+      :category_id, :output_quantity,
       item_components_attributes: %i[id component_item_id quantity _destroy]
     )
   end

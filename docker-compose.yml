@@ -17,6 +17,13 @@ services:
         condition: service_healthy
     stdin_open: true
     tty: true
+  css:
+    build: .
+    command: bundle exec rails tailwindcss:watch
+    volumes:
+      - .:/app
+    depends_on:
+      - app
 
   db:
     image: postgres:16-alpine

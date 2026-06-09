@@ -29,6 +29,7 @@ class Item < ApplicationRecord
   validates :preparation_time, numericality: { greater_than_or_equal_to: 0 }
   validates :sale_price,       numericality: { greater_than_or_equal_to: 0 }
   validates :additional_cost,  numericality: { greater_than_or_equal_to: 0 }
+  validates :output_quantity, numericality: { greater_than: 0, only_integer: true }
 
   def total_cost
     additional_cost + component_costs
@@ -73,12 +74,12 @@ class Item < ApplicationRecord
     else
       hours   = time / 60
       minutes = time % 60
-      minutes.zero? ? "#{hours.to_i} h" : "#{hours.to_i} h #{minutes.to_i} min"
+      minutes.zero? ? "#{hours.to_i}h" : "#{hours.to_i}h #{minutes.to_i}min"
     end
   end
 
   def total_preparation_time
-    preparation_time + component_preparation_time
+    (preparation_time + component_preparation_time) / output_quantity
   end
 
   private
