@@ -79,7 +79,7 @@ class Item < ApplicationRecord
   end
 
   def total_preparation_time
-    (preparation_time + component_preparation_time) / output_quantity
+    ((preparation_time + component_preparation_time) / output_quantity).ceil
   end
 
   private
