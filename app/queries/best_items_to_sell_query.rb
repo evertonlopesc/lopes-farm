@@ -16,7 +16,7 @@ class BestItemsToSellQuery
 
     scope.to_a
          .map     { |item| decorate(item) }
-         .sort_by { |d| [d.preparation_time, -d.margin, d.component_count] }
+         .sort_by { |d| [d.preparation_time, -d.sale_price, -d.margin, d.component_count] }
          .first(@limit)
   end
 
@@ -29,10 +29,11 @@ class BestItemsToSellQuery
   end
 
   def decorate(item)
-    Data.define(:item, :preparation_time, :margin, :margin_percentage,
+    Data.define(:item, :preparation_time, :sale_price, :margin, :margin_percentage,
                 :total_cost, :component_count, :formatted_time).new(
       item:              item,
       preparation_time:  item.total_preparation_time,  # ← era item.preparation_time
+      sale_price:        item.sale_price,
       margin:            item.margin,
       margin_percentage: item.margin_percentage,
       total_cost:        item.total_cost,
